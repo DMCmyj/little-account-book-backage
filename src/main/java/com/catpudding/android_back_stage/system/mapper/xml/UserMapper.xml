@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.catpudding.android_back_stage.system.mapper.UserMapper">
+
+    <select id="getUserRole" resultType="com.catpudding.android_back_stage.system.entity.SysUserRole">
+        select user_id,role_name from
+        sys_role inner join sys_user_role sur on sys_role.id = sur.role_id
+        where user_id = #{userId}
+    </select>
+    <select id="getAllUser" resultType="com.catpudding.android_back_stage.system.entity.SysUser">
+        select sys_user.* from
+        sys_user inner join sys_user_role sur on sys_user.id = sur.user_id
+        where del_flag = 0
+        group by user_id
+        having count(*) = 1;
+    </select>
+</mapper>
